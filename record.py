@@ -2,11 +2,20 @@ import sys
 from catalog import col, table, Database
 
 database = Database()
-database.load()
+database = database.load()
 
 
 def show(query):
-    print(database)
+    print('The table name already exists in the database:')
+    print(database.table_names)
+    # print(database.tables)
+    # new = Database()
+    # new.load()
+    # print('test load:\n ------------- ')
+    # print(new.table_names)
+
+
+show(' ')
 
 
 def create(query):
@@ -76,11 +85,11 @@ def insert(query):
             # TODO: 这里保存之后会比较慢，可能要改成局部保存
             database.save()
             for value in values_list:
-                flag = database.tables[table_name]['col_list'][i].add_data(value)
+                flag = database.tables[table_name].col_list[i].add_data(value)
                 if (flag is True):
                     i = i + 1
                 else:
-                    database.load()
+                    database = database.load()
                     break
             if (flag is True):
                 database.save()
