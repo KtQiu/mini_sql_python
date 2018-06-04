@@ -15,12 +15,15 @@ class col(object):
     is_unique: the data is unique or notz
     '''
 
-    def __init__(self, col_name=None, attr='int', is_unique=0, data=[]):
+    def __init__(self, col_name=None, attr='int', is_unique=0, data=None):
         super(col).__init__()
         self.col_name = col_name
         self.attr = attr
         self.is_unique = is_unique
+        if data == None:
+            data = []
         self.data = data
+        # self.data = (data == None ? list(): data)
 
     def set_attr(self, attr):
         self.attr = attr
@@ -34,11 +37,12 @@ class col(object):
     def add_data(self, data):
         if data in self.data and self.is_unique == 1:
             print(
-                'Cannot insert a duplicate data when {} is setted \'unique\''.
+                'Cannot insert a duplicate data when {} is \'unique\''.
                 format(self.col_name))
             return False
         else:
             self.data.append(data)
+            print(self.data)
             return True
 
 
@@ -57,13 +61,13 @@ class table(object):
                  table_name=None,
                  primary_key=None,
                  col_list=[],
-                 col_index=[],
-                 data=[]):
+                 col_index=[]):
         # super(table).__init__()
         self.table_name = table_name
         self.primary_key = primary_key
         self.col_index = col_index
         self.col_list = col_list
+        # self.data = data
 
     def __str__(self):
         table_str = ''
@@ -102,7 +106,7 @@ class Database(object):
         self.tables = tables
 
     def __getstate__(self):
-        print('====================')
+        # print('====================')
         return (self.table_names, self.tables)
 
     def __setstate__(self, state):
@@ -135,10 +139,19 @@ class Database(object):
             self.table_names.append(_table.table_name)
             self.tables[_table.table_name] = _table
 
-    def drop_table(self, _table):
-        if _table.table_name not in self.table_names:
-            print("Cannot find table: {} in database".format(
-                _table.table_name))
+    def drop_table(self, _table_name):
+        try:
+            i = self.table_names.index(_table_name)
+            del self.table_names[i]
+            del self.tables[_table_name]
+        except ValueError:
+            print("Not find such table")
             sys.exit(0)
-        else:
-            del self.table_names[_table.table_name]
+        # if _table_name not in self.table_names:
+        #     print("Cannot find table: {} in database".format(
+        #         _table.table_name))
+        #     sys.exit(0)
+        # else:
+
+        #     del self.table_names[_table.table_name]
+        #     def self.tables[]

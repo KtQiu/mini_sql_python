@@ -22,9 +22,11 @@ if __name__ == '__main__':
     main()
 
 # create table student(
-#         stu_id char(2) unique,
+#         stu_id char(10) unique,
 #         stu_name char(12),
 #         primary key (stu_id));
 
-# insert into student values ('12', '123456789012');
+# insert into student values ('11', '1111');
 # select * from student where sage > 20 and sgender = ‘F’;
+# select * from student ;
+
